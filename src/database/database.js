@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import 'dotenv/config';
+import { reject } from "bcrypt/promises";
 
 export const sequelize = new Sequelize(
     process.env.DB_DATABASE, //name
@@ -9,7 +10,13 @@ export const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         dialect: process.env.DB_DIALECT,
         logging: console.log,
-        ssl:true,
+        dialectOptions: {
+             ssl: {
+                require:true, 
+                rejectUnauthorized: false,  
+            } 
+    
+        }
     }
 );
 
